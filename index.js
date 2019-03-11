@@ -253,7 +253,6 @@ module.exports = class DataAttributes extends Plugin {
     Object.keys(this.Modules).forEach(async (modName) => {
       const mod = this.Modules[modName]
 
-      console.log('[data attributes]', `unpatching ${modName}`)
       uninject(`pc-dataattributes-${modName}`)
 
       this.forceUpdateAll(mod)
