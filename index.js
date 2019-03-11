@@ -84,7 +84,7 @@ module.exports = class DataAttributes extends Plugin {
         selector: '.content-OzHfo4:not(.placeholder-oNR4zO)',
         instance: (elem) => getOwnerInstance(elem),
         patch: (_, res) => {
-          if (!res._owner && !res._owner.memoizedProps) return res
+          if (!res._owner || !res._owner.memoizedProps) return res
 
           const { user, colorString, isOwner } = res._owner.memoizedProps
 
