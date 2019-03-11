@@ -129,10 +129,10 @@ module.exports = class DataAttributes extends Plugin {
           res.props['data-message-id'] = id
           res.props['data-colorstring'] = colorString
           res.props['data-author-id'] = author.id
+          if (author && author.email) res.props.className += ' pca-isCurrentUser'
           if (bot || author.bot) res.props.className += ' pca-isBot'
           if (attachments && attachments.length) res.props.className += ' pca-hasAttachments'
           if (embeds && embeds.length) res.props.className += ' pca-hasEmbeds'
-          if (author && author.email) res.props.className += ' pca-isCurrentUser'
     
           if (channel.guild_id) {
             const guild = this.getGuild(channel.guild_id)
