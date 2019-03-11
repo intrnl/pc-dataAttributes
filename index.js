@@ -6,12 +6,7 @@ const { getModule } = require('powercord/webpack')
 module.exports = class DataAttributes extends Plugin {
   constructor () {
     super()
-
-    this.getGuild = () => void 0
-    this.getMembers = () => void 0
-    this.getChannel = () => void 0
-    this.getDMChannel = () => void 0
-
+    
     this.Modules = {
       DMChannel: {
         selector: '.channel-2QD9_O[style]',
