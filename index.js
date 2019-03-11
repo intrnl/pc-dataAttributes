@@ -188,6 +188,11 @@ module.exports = class DataAttributes extends Plugin {
       'minimize': () => document.body.classList.add('pca-isMinimized'),
       'restore': () => document.body.classList.remove('pca-isMinimized'),
     }
+    this.ContentListeners = {
+      'did-navigate-in-page': (event, url) => {
+        this._urlHandler(url)
+      }
+    }
 
     this.currentWindow = require('electron').remote.getCurrentWindow()
   }
@@ -224,6 +229,14 @@ module.exports = class DataAttributes extends Plugin {
 
       this.currentWindow.on(eventName, runFunction)
     })
+
+    Object.keys(this.ContentListeners).forEach((eventName) => {
+      const runFunction = this.ContentListeners[eventName]
+
+      this.currentWindow.webContents.on(eventName, runFunction)
+    })
+
+    this._urlHandler(document.URL)
   }
 
   unload () {
@@ -243,12 +256,18 @@ module.exports = class DataAttributes extends Plugin {
 
       this.currentWindow.off(eventName, runFunction)
     })
+    Object.keys(this.ContentListeners).forEach((eventName) => {
+      const runFunction = this.ContentListeners[eventName]
+
+      this.currentWindow.webContents.off(eventName, runFunction)
+    })
 
     // Remove stuff from body
     document.body.classList.remove('pca-isDark', 'pca-isLight')
     document.body.classList.remove('pca-isUnfocused', 'pca-isHidden', 'pca-isMaximized', 'pca-isMinimized')
     document.body.removeAttribute('data-channel-id')
     document.body.removeAttribute('data-guild-id')
+    document.body.removeAttribute('data-current-activity')
   }
 
   // Higher sleep time, don't really want to cause performance issues :sweat_drops:
@@ -292,5 +311,22 @@ module.exports = class DataAttributes extends Plugin {
     if (channel.type === 6) res.props.className += ' pca-isStoreListingChannel'
 
     return res
+  }
+  _urlHandler (url) {
+    document.body.removeAttribute('data-channel-id')
+    document.body.removeAttribute('data-guild-id')
+    document.body.removeAttribute('data-current-activity')
+
+    const navigation = url
+      .replace(/https?:\/\/(?:(canary|ptb|)\.?)discordapp.com\//, '')
+      .split('/')
+    
+    if (navigation[0] === 'channels') {
+      document.body.setAttribute('data-current-activity', 'text')
+      if (navigation[1] !== '@me') document.body.setAttribute('data-guild-id', navigation[1])
+      document.body.setAttribute('data-channel-id', navigation[2])
+    } else {
+      document.body.setAttribute('data-current-activity', navigation[0])
+    }
   }
 }
