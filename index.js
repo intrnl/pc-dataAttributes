@@ -10,7 +10,6 @@ module.exports = class DataAttributes extends Plugin {
     this.Modules = {
       DMChannel: {
         selector: '.channel-2QD9_O[style]',
-        instance: (elem) => getOwnerInstance(elem),
         patch: (_, res) => {
           // For some reason, we're also patching into random things,
           // Unsure why, but this is the bodge for now.
@@ -31,7 +30,6 @@ module.exports = class DataAttributes extends Plugin {
       },
       Guild: {
         selector: '.container-2td-dC',
-        instance: (elem) => getOwnerInstance(elem),
         patch: (_, res) => {
           if (!res._owner && !res._owner.memoizedProps) return res
 
@@ -46,7 +44,7 @@ module.exports = class DataAttributes extends Plugin {
       },
       GuildTextChannel: {
         selector: '.wrapperConnectedText-3NUF2g, .wrapperDefaultText-2IWcE8, .wrapperHoveredText-2geN_M, .wrapperLockedText-wfOnM5, .wrapperMutedText-1YBpvv, .wrapperSelectedText-3dSUjC, .wrapperUnreadText-2zuiuD',
-        instance: (elem) => getOwnerInstance(elem.parentElement),
+        element: (elem) => elem.parentElement,
         patch: (_, res) => {
           if (!res.props.children.props) return res
 
@@ -58,7 +56,7 @@ module.exports = class DataAttributes extends Plugin {
       },
       GuildVoiceChannel: {
         selector: '.wrapperConnectedVoice-2mvQJY, .wrapperDefaultVoice-1yvceo, .wrapperHoveredVoice-3ItgyI, .wrapperLockedVoice-3QrBs-, .wrapperMutedVoice-10gPcW, .wrapperSelectedVoice-xzxa2u, .wrapperUnreadVoice-23GIYe',
-        instance: (elem) => getOwnerInstance(elem.parentElement),
+        element: (elem) => elem.parentElement,
         patch: (_, res) => {
           if (!res.props.children[0].props) return res
 
@@ -70,7 +68,7 @@ module.exports = class DataAttributes extends Plugin {
       },
       GuildStoreListingChannel: {
         selector: '.wrapper-KpKNwI .icon-sxakjD[name="StoreTag"]',
-        instance: (elem) => getOwnerInstance(elem.parentElement.parentElement.parentElement.parentElement),
+        element: (elem) => elem.parentElement.parentElement.parentElement.parentElement,
         patch: (_, res) => {
           if (!res.props.children.props) return res
 
@@ -82,7 +80,6 @@ module.exports = class DataAttributes extends Plugin {
       },
       ChannelMember: {
         selector: '.content-OzHfo4:not(.placeholder-oNR4zO)',
-        instance: (elem) => getOwnerInstance(elem),
         patch: (_, res) => {
           if (!res._owner || !res._owner.memoizedProps) return res
 
@@ -98,7 +95,6 @@ module.exports = class DataAttributes extends Plugin {
       },
       Chat: {
         selector: '.chat-3bRxxu',
-        instance: (elem) => getOwnerInstance(elem),
         patch: (_, res) => {
           const { channel, theme } = res.props.children[2] ? res.props.children[2].props : res.props.children[3].props.children[1].props
           if (!channel) return res
@@ -125,7 +121,6 @@ module.exports = class DataAttributes extends Plugin {
       },
       MessageGroup: {
         selector: '.container-1YxwTf',
-        instance: (elem) => getOwnerInstance(elem),
         patch: (_, res) => {
           if (!res.props.children[0][0].props) return res
 
@@ -152,7 +147,6 @@ module.exports = class DataAttributes extends Plugin {
       },
       MessageContent: {
         selector: '.message-1PNnaP',
-        instance: (elem) => getOwnerInstance(elem),
         patch: (_, res) => {
           if (!res._owner.memoizedProps) return res
 
@@ -180,7 +174,6 @@ module.exports = class DataAttributes extends Plugin {
       },
       UserRole: {
         selector: '.role-2irmRk',
-        instance: (elem) => getOwnerInstance(elem),
         patch: function (_, res) {
           const { role } = this.props
           if (!role) return res
@@ -225,7 +218,7 @@ module.exports = class DataAttributes extends Plugin {
       const mod = this.Modules[modName]
 
       this.waitFor(mod.selector)
-        .then((elem) => mod.instance(elem))
+        .then((elem) => this.getOwnerInstance(mod, elem))
         .then((instance) => {
           // Don't continue patching if:
           // - plugin is disabled
@@ -283,9 +276,17 @@ module.exports = class DataAttributes extends Plugin {
     return elem
   }
 
+  getOwnerInstance (mod, elem) {
+    if (mod.element && typeof mod.element === 'function') {
+      return getOwnerInstance(mod.element(elem))
+    } else {
+      return getOwnerInstance(elem)
+    }
+  }
+
   forceUpdateAll (mod) {
     for (const elem of document.querySelectorAll(mod.selector)) {
-      const inst = mod.instance(elem)
+      const inst = this.getOwnerInstance(mod, elem)
       inst.forceUpdate()
     }
   }
