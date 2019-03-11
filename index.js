@@ -10,7 +10,6 @@ module.exports = class DataAttributes extends Plugin {
     this.getGuild = () => void 0
     this.getMembers = () => void 0
     this.getChannel = () => void 0
-    this.initialized = false
 
     this.Modules = {
       Guild: {
@@ -169,7 +168,6 @@ module.exports = class DataAttributes extends Plugin {
     this.getGuild = await getModule(m => m.getGuild).getGuild
     this.getMembers = await getModule(m => m.getMember).getMembers
     this.getChannel = await getModule(m => m.getChannels).getChannel
-    this.initialized = true
 
     Object.keys(this.Modules).forEach((modName) => {
       const mod = this.Modules[modName]
