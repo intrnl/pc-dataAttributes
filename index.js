@@ -10,8 +10,30 @@ module.exports = class DataAttributes extends Plugin {
     this.getGuild = () => void 0
     this.getMembers = () => void 0
     this.getChannel = () => void 0
+    this.getDMChannel = () => void 0
 
     this.Modules = {
+      DMChannel: {
+        selector: '.channel-2QD9_O[style]',
+        instance: (elem) => getOwnerInstance(elem),
+        patch: (_, res) => {
+          // For some reason, we're also patching into random things,
+          // Unsure why, but this is the bodge for now.
+          if (!res.props.className) return res
+          if (!res.props.className.includes('channel-2QD9_O')) return res
+
+          let { channel, user } = res.props.children.props.children[0].props
+
+          if (!channel) channel = this.getChannel(this.getDMChannelId(user.id))
+
+          if (user) {
+            res.props['data-user-id'] = user.id
+            if (user.bot) res.props.className += ' pca-isBot'
+          }
+
+          return this._channelHandler(channel, res)
+        }
+      },
       Guild: {
         selector: '.container-2td-dC',
         instance: (elem) => getOwnerInstance(elem),
@@ -200,6 +222,7 @@ module.exports = class DataAttributes extends Plugin {
     this.getGuild = await getModule(m => m.getGuild).getGuild
     this.getMembers = await getModule(m => m.getMember).getMembers
     this.getChannel = await getModule(m => m.getChannels).getChannel
+    this.getDMChannelId = await getModule(m => m.getChannels).getDMFromUserId
 
     Object.keys(this.Modules).forEach((modName) => {
       const mod = this.Modules[modName]
