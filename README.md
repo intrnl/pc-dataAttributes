@@ -21,8 +21,6 @@ Here are the things that the plugin adds
 - **Document body** _(yes, really)_
   - _attribute_ `data-channel-id`
   - _attribute_ `data-guild-id`
-  - _class_ `pca-isDark`
-  - _class_ `pca-isLight`
   - _class_ `pca-isUnfocused`
   - _class_ `pca-isHidden`
   - _class_ `pca-isMaximized`
