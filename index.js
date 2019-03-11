@@ -33,6 +33,9 @@ module.exports = class DataAttributes extends Plugin {
         patch: (_, res) => {
           if (!res._owner && !res._owner.memoizedProps) return res
 
+          // Ignore Guild Folders plugin for now
+          if (res._owner.memoizedProps.draggableId) return res
+
           const { guild } = res._owner.memoizedProps
           if (!guild) return res
 
