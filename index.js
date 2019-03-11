@@ -128,7 +128,7 @@ module.exports = class DataAttributes extends Plugin {
 
           res.props['data-message-id'] = id
           res.props['data-colorstring'] = colorString
-          res.props['data-user-id'] = author.id
+          res.props['data-author-id'] = author.id
           if (bot || author.bot) res.props.className += ' pca-isBot'
           if (attachments && attachments.length) res.props.className += ' pca-hasAttachments'
           if (embeds && embeds.length) res.props.className += ' pca-hasEmbeds'
