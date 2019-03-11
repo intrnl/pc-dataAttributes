@@ -183,7 +183,7 @@ module.exports = class DataAttributes extends Plugin {
     })
   }
 
-  // Higher sleep time, don't really want to cause bottlenecks :sweat_drops:
+  // Higher sleep time, don't really want to cause performance issues :sweat_drops:
   async waitFor (query) {
     let elem
 
