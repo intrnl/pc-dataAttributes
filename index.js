@@ -162,14 +162,21 @@ module.exports = class DataAttributes extends Plugin {
         .then((instance) => {
           console.log('[data attributes]', `patching ${modName}`)
           inject(`pc-dataattributes-${modName}`, Object.getPrototypeOf(instance), 'render', mod.patch)
+          mod.patched = true
         })
     })
   }
 
   unload () {
-    Object.keys(this.Modules).forEach((modName) => {
+    Object.keys(this.Modules).forEach(async (modName) => {
+      const mod = this.Modules[modName]
+
+      while (!mod.patched) await sleep(250)
+      
       console.log('[data attributes]', `unpatching ${modName}`)
       uninject(`pc-dataattributes-${modName}`)
+
+      mod.patched = false
     })
   }
 
