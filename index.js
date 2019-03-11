@@ -209,6 +209,8 @@ module.exports = class DataAttributes extends Plugin {
         .then((instance) => {
           console.log('[data attributes]', `patching ${modName}`)
           inject(`pc-dataattributes-${modName}`, Object.getPrototypeOf(instance), 'render', mod.patch)
+          
+          this.forceUpdateAll(mod)
           mod.patched = true
         })
     })
@@ -232,6 +234,7 @@ module.exports = class DataAttributes extends Plugin {
       console.log('[data attributes]', `unpatching ${modName}`)
       uninject(`pc-dataattributes-${modName}`)
 
+      this.forceUpdateAll(mod)
       mod.patched = false
     })
 
@@ -257,6 +260,13 @@ module.exports = class DataAttributes extends Plugin {
     }
 
     return elem
+  }
+
+  forceUpdateAll (mod) {
+    for (const elem of document.querySelectorAll(mod.selector)) {
+      const inst = mod.instance(elem)
+      inst.forceUpdate()
+    }
   }
 
   _channelHandler (channel, res) {
