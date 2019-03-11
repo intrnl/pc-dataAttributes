@@ -176,6 +176,8 @@ module.exports = class DataAttributes extends Plugin {
       'minimize': () => document.body.classList.add('pca-isMinimized'),
       'restore': () => document.body.classList.remove('pca-isMinimized'),
     }
+
+    this.currentWindow = require('electron').remote.getCurrentWindow()
   }
 
   async start () {
@@ -194,6 +196,12 @@ module.exports = class DataAttributes extends Plugin {
           mod.patched = true
         })
     })
+
+    Object.keys(this.WindowListeners).forEach((eventName) => {
+      const runFunction = this.WindowListeners[eventName]
+
+      this.currentWindow.on(eventName, runFunction)
+    })
   }
 
   unload () {
@@ -211,8 +219,15 @@ module.exports = class DataAttributes extends Plugin {
       mod.patched = false
     })
 
+    Object.keys(this.WindowListeners).forEach((eventName) => {
+      const runFunction = this.WindowListeners[eventName]
+
+      this.currentWindow.off(eventName, runFunction)
+    })
+
     // Remove stuff from body
     document.body.classList.remove('pca-isDark', 'pca-isLight')
+    document.body.classList.remove('pca-isUnfocused', 'pca-isHidden', 'pca-isMaximized', 'pca-isMinimized')
     document.body.removeAttribute('data-channel-id')
     document.body.removeAttribute('data-guild-id')
   }
