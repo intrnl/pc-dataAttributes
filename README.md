@@ -27,9 +27,16 @@ Here are the things that the plugin adds
   - _class_ `pca-isHidden`
   - _class_ `pca-isMaximized`
   - _class_ `pca-isMinimized`
-- **Guilds**
+- **Guild**
   - _attribute_ `data-guild-id`
   - _attribute_ `data-guild-name`
+- **DM Channel**
+  - _attribute_ `data-user-id`
+  - _attribute_ `data-channel-id`
+  - _attribute_ `data-channel-name`
+  - _class_ `pca-isBot`
+  - _class_ `pca-isPrivateChannel`
+  - _class_ `pca-isGroupChannel`
 - **Guild channels and chat component**
   - _attribute_ `data-channel-id`
   - _attribute_ `data-channel-name`
@@ -37,6 +44,8 @@ Here are the things that the plugin adds
   - _class_ `pca-isPrivateChannel`
   - _class_ `pca-isGroupChannel`
   - _class_ `pca-isTextChannel`
+  - _class_ `pca-isVoiceChannel`
+  - _class_ `pca-isStoreListingChannel`
 - **Channel members**
   - _attribute_ `data-user-id`
   - _attribute_ `data-colorstring`
