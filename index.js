@@ -162,6 +162,20 @@ module.exports = class DataAttributes extends Plugin {
         }
       },
     }
+
+    this.WindowListeners = {
+      'blur': () => document.body.classList.add('pca-isUnfocused'),
+      'focus': () => document.body.classList.remove('pca-isUnfocused'),
+
+      'hide': () => document.body.classList.add('pca-isHidden'),
+      'show': () => document.body.classList.remove('pca-isHidden'),
+
+      'maximize': () => document.body.classList.add('pca-isMaximized'),
+      'unmaximize': () => document.body.classList.remove('pca-isMaximized'),
+
+      'minimize': () => document.body.classList.add('pca-isMinimized'),
+      'restore': () => document.body.classList.remove('pca-isMinimized'),
+    }
   }
 
   async start () {
