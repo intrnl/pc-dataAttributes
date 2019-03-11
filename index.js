@@ -6,7 +6,7 @@ const { getModule } = require('powercord/webpack')
 module.exports = class DataAttributes extends Plugin {
   constructor () {
     super()
-    
+
     this.Modules = {
       DMChannel: {
         selector: '.channel-2QD9_O[style]',
@@ -33,7 +33,7 @@ module.exports = class DataAttributes extends Plugin {
         selector: '.container-2td-dC',
         instance: (elem) => getOwnerInstance(elem),
         patch: (_, res) => {
-          if (!res._owner.memoizedProps) return res
+          if (!res._owner && !res._owner.memoizedProps) return res
 
           const { guild } = res._owner.memoizedProps
           if (!guild) return res
@@ -84,7 +84,7 @@ module.exports = class DataAttributes extends Plugin {
         selector: '.content-OzHfo4',
         instance: (elem) => getOwnerInstance(elem),
         patch: (_, res) => {
-          if (!res._owner || !res._owner.memoizedProps) return res
+          if (!res._owner && !res._owner.memoizedProps) return res
 
           const { user, colorString, isOwner } = res._owner.memoizedProps
 
