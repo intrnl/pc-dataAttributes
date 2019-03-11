@@ -122,10 +122,10 @@ module.exports = class DataAttributes extends Plugin {
 
           if (channel.guild_id) {
             const guild = this.getGuild(channel.guild_id)
-            const members = this.getMembers(channel.guild_id)
+            const member = this.getMember(channel.guild_id, author.id)
 
             if (author.id === guild.ownerId) res.props.className += ' pca-isGuildOwner'
-            if (members.find(m => m.userId === author.id)) res.props.className += ' pca-isGuildMember'
+            if (member) res.props.className += ' pca-isGuildMember'
           }
 
           return res
@@ -149,10 +149,10 @@ module.exports = class DataAttributes extends Plugin {
 
           if (channel.guild_id) {
             const guild = this.getGuild(channel.guild_id)
-            const members = this.getMembers(channel.guild_id)
+            const member = this.getMember(channel.guild_id, author.id)
 
             if (author.id === guild.ownerId) res.props.className += ' pca-isGuildOwner'
-            if (members.find(m => m.userId === author.id)) res.props.className += ' pca-isGuildMember'
+            if (member) res.props.className += ' pca-isGuildMember'
           }
 
           return res
