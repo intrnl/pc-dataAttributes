@@ -58,7 +58,7 @@ Here are the things that the plugin adds
   - _class_ `pca-hasEmbeds`
   - _class_ `pca-isGuildOwner`
   - _class_ `pca-isGuildMember`
-- **User popout role**
+- **User role**
   - _attribute_ `data-role-id`
   - _attribute_ `data-role-name`
   - _attribute_ `data-role-color`

@@ -161,7 +161,7 @@ module.exports = class DataAttributes extends Plugin {
           return res
         }
       },
-      UserPopoutRole: {
+      UserRole: {
         selector: '.role-2irmRk',
         instance: (elem) => getOwnerInstance(elem),
         patch: function (_, res) {
