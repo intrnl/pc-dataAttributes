@@ -23,6 +23,10 @@ Here are the things that the plugin adds
   - _attribute_ `data-guild-id`
   - _class_ `pca-isDark`
   - _class_ `pca-isLight`
+  - _class_ `pca-isUnfocused`
+  - _class_ `pca-isHidden`
+  - _class_ `pca-isMaximized`
+  - _class_ `pca-isMinimized`
 - **Guilds**
   - _attribute_ `data-guild-id`
   - _attribute_ `data-guild-name`
