@@ -81,7 +81,7 @@ module.exports = class DataAttributes extends Plugin {
         }
       },
       ChannelMember: {
-        selector: '.content-OzHfo4',
+        selector: '.content-OzHfo4:not(.placeholder-oNR4zO)',
         instance: (elem) => getOwnerInstance(elem),
         patch: (_, res) => {
           if (!res._owner && !res._owner.memoizedProps) return res
@@ -214,6 +214,8 @@ module.exports = class DataAttributes extends Plugin {
   }
 
   async start () {
+    this.initialized = true
+
     this.getGuild = await getModule(m => m.getGuild).getGuild
     this.getMembers = await getModule(m => m.getMember).getMembers
     this.getChannel = await getModule(m => m.getChannels).getChannel
@@ -225,9 +227,14 @@ module.exports = class DataAttributes extends Plugin {
       this.waitFor(mod.selector)
         .then((elem) => mod.instance(elem))
         .then((instance) => {
+          // Don't continue patching if:
+          // - plugin is disabled
+          // - it's already patched
+          if (!this.initialized || mod.patched) return
+
           console.log('[data attributes]', `patching ${modName}`)
           inject(`pc-dataattributes-${modName}`, Object.getPrototypeOf(instance), 'render', mod.patch)
-          
+
           this.forceUpdateAll(mod)
           mod.patched = true
         })
@@ -241,13 +248,10 @@ module.exports = class DataAttributes extends Plugin {
   }
 
   unload () {
+    this.initialized = false
+
     Object.keys(this.Modules).forEach(async (modName) => {
       const mod = this.Modules[modName]
-
-      // There's probably a better way to do this,
-      // like checking if the plugin is disabled before patching,
-      // though this should do for now.
-      while (!mod.patched) await sleep(250)
 
       console.log('[data attributes]', `unpatching ${modName}`)
       uninject(`pc-dataattributes-${modName}`)
