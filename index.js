@@ -171,8 +171,11 @@ module.exports = class DataAttributes extends Plugin {
     Object.keys(this.Modules).forEach(async (modName) => {
       const mod = this.Modules[modName]
 
+      // There's probably a better way to do this,
+      // like checking if the plugin is disabled before patching,
+      // though this should do for now.
       while (!mod.patched) await sleep(250)
-      
+
       console.log('[data attributes]', `unpatching ${modName}`)
       uninject(`pc-dataattributes-${modName}`)
 
