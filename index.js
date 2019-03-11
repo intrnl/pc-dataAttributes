@@ -268,11 +268,11 @@ module.exports = class DataAttributes extends Plugin {
   }
 
   // Higher sleep time, don't really want to cause performance issues :sweat_drops:
-  async waitFor (query) {
+  async waitFor (query, ms = 2500) {
     let elem
 
     while (!(elem = document.querySelector(query))) {
-      await sleep(2500)
+      await sleep(ms)
     }
 
     return elem
