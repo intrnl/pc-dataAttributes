@@ -198,10 +198,10 @@ module.exports = class DataAttributes extends Plugin {
   async start () {
     this.initialized = true
 
-    this.getGuild = await getModule(m => m.getGuild).getGuild
-    this.getMembers = await getModule(m => m.getMember).getMembers
-    this.getChannel = await getModule(m => m.getChannels).getChannel
-    this.getDMChannelId = await getModule(m => m.getChannels).getDMFromUserId
+    this.getGuild = await getModule(['getGuild']).getGuild
+    this.getMember = await getModule(['getMember']).getMember
+    this.getChannel = await getModule(['getChannels']).getChannel
+    this.getDMChannelId = await getModule(['getChannels']).getDMFromUserId
 
     Object.keys(this.Modules).forEach((modName) => {
       const mod = this.Modules[modName]
