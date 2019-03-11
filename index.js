@@ -232,7 +232,7 @@ module.exports = class DataAttributes extends Plugin {
           // - it's already patched
           if (!this.initialized || mod.patched) return
 
-          this.log(`patching ${modName}`)
+          this.log(`${modName} module patched`)
           inject(`pc-dataattributes-${modName}`, Object.getPrototypeOf(instance), 'render', mod.patch)
 
           this.forceUpdateAll(mod)
