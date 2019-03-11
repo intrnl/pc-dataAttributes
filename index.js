@@ -189,9 +189,7 @@ module.exports = class DataAttributes extends Plugin {
       'restore': () => document.body.classList.remove('pca-isMinimized'),
     }
     this.ContentListeners = {
-      'did-navigate-in-page': (event, url) => {
-        this._urlHandler(url)
-      }
+      'did-navigate-in-page': (event, url) => this._urlHandler(url),
     }
 
     this.currentWindow = require('electron').remote.getCurrentWindow()
@@ -318,7 +316,7 @@ module.exports = class DataAttributes extends Plugin {
     const navigation = url
       .replace(/https?:\/\/(?:(canary|ptb|)\.?)discordapp.com\//, '')
       .split('/')
-    
+
     if (navigation[0] === 'channels') {
       if (navigation[1] !== '@me') document.body.setAttribute('data-guild-id', navigation[1])
       document.body.setAttribute('data-channel-id', navigation[2])
