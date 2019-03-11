@@ -88,7 +88,7 @@ module.exports = class DataAttributes extends Plugin {
 
           // Add some stuff to body as well, just for fun.
           document.body.setAttribute('data-channel-id', channel.id)
-          
+
           if (channel.guild_id) {
             document.body.setAttribute('data-guild-id', channel.guild_id)
           } else {
@@ -125,11 +125,11 @@ module.exports = class DataAttributes extends Plugin {
           if (channel.guild_id) {
             const guild = this.getGuild(channel.guild_id)
             const members = this.getMembers(channel.guild_id)
-    
+
             if (author.id === guild.ownerId) res.props.className += ' pca-isGuildOwner'
             if (members.find(m => m.userId === author.id)) res.props.className += ' pca-isGuildMember'
           }
-          
+
           return res
         }
       },
@@ -149,15 +149,15 @@ module.exports = class DataAttributes extends Plugin {
           if (bot || author.bot) res.props.className += ' pca-isBot'
           if (attachments && attachments.length) res.props.className += ' pca-hasAttachments'
           if (embeds && embeds.length) res.props.className += ' pca-hasEmbeds'
-    
+
           if (channel.guild_id) {
             const guild = this.getGuild(channel.guild_id)
             const members = this.getMembers(channel.guild_id)
-    
+
             if (author.id === guild.ownerId) res.props.className += ' pca-isGuildOwner'
             if (members.find(m => m.userId === author.id)) res.props.className += ' pca-isGuildMember'
           }
-    
+
           return res
         }
       },
@@ -185,7 +185,7 @@ module.exports = class DataAttributes extends Plugin {
 
     Object.keys(this.Modules).forEach((modName) => {
       const mod = this.Modules[modName]
-    
+
       this.waitFor(mod.selector)
         .then((elem) => mod.instance(elem))
         .then((instance) => {
@@ -224,7 +224,7 @@ module.exports = class DataAttributes extends Plugin {
     while (!(elem = document.querySelector(query))) {
       await sleep(2500)
     }
-  
+
     return elem
   }
 
