@@ -234,6 +234,7 @@ module.exports = class DataAttributes extends Plugin {
       this.currentWindow.webContents.on(eventName, runFunction)
     })
 
+    document.body.classList.add('pca-powercord')
     this._urlHandler(document.URL)
   }
 
@@ -263,6 +264,7 @@ module.exports = class DataAttributes extends Plugin {
     // Remove stuff from body
     document.body.classList.remove('pca-isDark', 'pca-isLight')
     document.body.classList.remove('pca-isUnfocused', 'pca-isHidden', 'pca-isMaximized', 'pca-isMinimized')
+    document.body.classList.remove('pca-powercord')
     document.body.removeAttribute('data-channel-id')
     document.body.removeAttribute('data-guild-id')
   }
