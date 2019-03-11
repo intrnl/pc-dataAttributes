@@ -161,6 +161,22 @@ module.exports = class DataAttributes extends Plugin {
           return res
         }
       },
+      UserPopoutRole: {
+        selector: '.role-2irmRk',
+        instance: (elem) => getOwnerInstance(elem),
+        patch: function (_, res) {
+          const { role } = this.props
+          if (!role) return res
+
+          res.props['data-role-id'] = role.id
+          res.props['data-role-name'] = role.name
+          res.props['data-role-color'] = role.colorString
+          if (role.hoist) res.props.className += ' pca-isHoisted'
+          if (role.mentionable) res.props.className += ' pca-isMentionable'
+
+          return res
+        }
+      }
     }
 
     this.WindowListeners = {
