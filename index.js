@@ -102,23 +102,6 @@ module.exports = class DataAttributes extends Plugin {
           const { channel, theme } = res.props.children[2] ? res.props.children[2].props : res.props.children[3].props.children[1].props
           if (!channel) return res
 
-          // Add some stuff to body as well, just for fun.
-          document.body.setAttribute('data-channel-id', channel.id)
-
-          if (channel.guild_id) {
-            document.body.setAttribute('data-guild-id', channel.guild_id)
-          } else {
-            document.body.removeAttribute('data-guild-id')
-          }
-
-          if (theme === 'dark') {
-            document.body.classList.add('pca-isDark')
-            document.body.classList.remove('pca-isLight')
-          } else {
-            document.body.classList.add('pca-isLight')
-            document.body.classList.remove('pca-isDark')
-          }
-
           return this._channelHandler(channel, res)
         }
       },
