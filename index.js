@@ -215,7 +215,7 @@ module.exports = class DataAttributes extends Plugin {
           if (!this.initialized || mod.patched) return
 
           this.log(`${modName} module patched`)
-          inject(`pc-dataattributes-${modName}`, Object.getPrototypeOf(instance), 'render', mod.patch)
+          inject(`pc-dataattributes-${modName}`, Object.getPrototypeOf(instance), mod.function || 'render', mod.patch, mod.pre || false)
 
           this.forceUpdateAll(mod)
           mod.patched = true
