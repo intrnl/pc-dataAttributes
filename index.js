@@ -134,7 +134,7 @@ module.exports = class DataAttributes extends Plugin {
       MessageContent: {
         selector: '.message-1PNnaP',
         patch: (_, res) => {
-          if (!res._owner.memoizedProps) return res
+          if (!res._owner || !res._owner.memoizedProps) return res
 
           const { message, channel } = res._owner.memoizedProps
           const { id, colorString, bot, author, attachments, embeds } = message
