@@ -321,7 +321,7 @@ module.exports = class DataAttributes extends Plugin {
 
     if (navigation[0] === 'channels') {
       if (navigation[1] !== '@me') document.body.setAttribute('data-guild-id', navigation[1])
-      document.body.setAttribute('data-channel-id', navigation[2])
+      if (navigation[2]) document.body.setAttribute('data-channel-id', navigation[2])
     }
   }
 }
