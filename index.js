@@ -120,7 +120,7 @@ module.exports = class DataAttributes extends Plugin {
           if (author.email) res.props.className += ' pca-isCurrentUser'
           if (type !== 0) res.props.className += ' pca-isSystemMessage'
 
-          if (channel.guild_id) {
+          if (channel && channel.guild_id) {
             const guild = this.getGuild(channel.guild_id)
             const member = this.getMember(channel.guild_id, author.id)
 
