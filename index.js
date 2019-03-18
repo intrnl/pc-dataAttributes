@@ -31,7 +31,7 @@ module.exports = class DataAttributes extends Plugin {
       Guild: {
         selector: '.container-2td-dC',
         patch: (_, res) => {
-          if (!res._owner && !res._owner.memoizedProps) return res
+          if (!res._owner || !res._owner.memoizedProps) return res
 
           // Ignore Guild Folders plugin for now
           if (res._owner.memoizedProps.draggableId) return res
@@ -99,6 +99,7 @@ module.exports = class DataAttributes extends Plugin {
       Chat: {
         selector: '.chat-3bRxxu',
         patch: (_, res) => {
+          if (!res || !res.props) return
           const { channel, theme } = res.props.children[2] ? res.props.children[2].props : res.props.children[3].props.children[1].props
           if (!channel) return res
 
