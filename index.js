@@ -99,7 +99,7 @@ module.exports = class DataAttributes extends Plugin {
       Chat: {
         selector: '.chat-3bRxxu',
         patch: (_, res) => {
-          if (!res || !res.props) return
+          if (!res || !res.props || !res.props.children) return res
           const { channel, theme } = res.props.children[2] ? res.props.children[2].props : res.props.children[3].props.children[1].props
           if (!channel) return res
 
