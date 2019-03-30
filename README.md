@@ -71,3 +71,14 @@ Here are the things that the plugin adds
   - _attribute_ `data-role-color`
   - _class_ `pca-isHoisted`
   - _class_ `pca-isMentionable`
+- **User popout**
+  - _attribute_ `data-user-id`
+  - _attribute_ `data-guild-id`
+  - _attribute_ `data-activity-type`
+  - _attribute_ `data-activity-name`
+  - _class_ `pca-isCurrentUser`
+  - _class_ `pca-isBot`
+  - _class_ `pca-isGuildMember`
+  - _class_ `pca-isGuildOwner`
+  - _class_ `pca-hasRoles`
+  - _class_ `pca-isPlayingSpotify`
