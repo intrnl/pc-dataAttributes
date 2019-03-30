@@ -1,4 +1,4 @@
-const Plugin = require('powercord/Plugin')
+const { Plugin } = require('powercord/entities')
 const { inject, uninject } = require('powercord/injector')
 const { getOwnerInstance, sleep } = require('powercord/util')
 const { getModule } = require('powercord/webpack')
@@ -312,7 +312,7 @@ class DataAttributes extends Plugin {
 
 
   // Start, unload
-  start () {
+  startPlugin () {
     this.initialized = true
 
     this.applyModulePatches()
@@ -322,7 +322,7 @@ class DataAttributes extends Plugin {
     this.ModuleHandler.handleURL(document.URL)
   }
 
-  unload () {
+  pluginWillUnload () {
     this.initialized = false
     this.cancelModulePatches()
     this.cancelWindowListeners()
