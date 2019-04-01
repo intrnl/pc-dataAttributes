@@ -202,6 +202,7 @@ const ModulePatches = {
       const { props } = returnValue
 
       const { user, colorString, isOwner } = thisObject.props
+      if (!user) return
 
       props['data-user-id'] = user.id
       props['data-colorstring'] = colorString
